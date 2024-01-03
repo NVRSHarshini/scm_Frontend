@@ -74,12 +74,12 @@ const DeviceData = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Device ID</TableCell>
-                <TableCell>Battery Level</TableCell>
-                <TableCell>First Sensor Temperature</TableCell>
-                <TableCell>Route From</TableCell>
-                <TableCell>Route To</TableCell>
-                <TableCell>Timestamp</TableCell>
+                <TableCell style={{color:"white"}}>Device ID</TableCell>
+                <TableCell style={{color:"white"}}>Battery Level</TableCell>
+                <TableCell style={{color:"white"}}>First Sensor Temperature</TableCell>
+                <TableCell style={{color:"white"}}>Route From</TableCell>
+                <TableCell style={{color:"white"}}>Route To</TableCell>
+                <TableCell style={{color:"white"}}>Timestamp</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
