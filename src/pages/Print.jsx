@@ -39,9 +39,9 @@ const ShipmentDetails = () => {
     fetchShipments();
   }, [navigate]);
 
-  const handleBack = () => {
-    navigate("/dashboard");
-  };
+  // const handleBack = () => {
+  //   navigate("/dashboard");
+  // };
 
   const handlePrint = (shipment) => {
     const printableContent = `
@@ -98,17 +98,30 @@ const ShipmentDetails = () => {
     const atIndex = email.indexOf('@');
     return atIndex !== -1 ? email.slice(0, atIndex) : email;
   };
-
+  const handleBack = () => {
+    // navigate("/dashboard");
+    setSearchTerm(''); // Clear the search term
+    setFilteredShipments(shipments); // Show all shipments
+  };
+  
   const handleSearch = () => {
     const lowercasedSearchTerm = searchTerm.toLowerCase();
-
-    const filteredShipments = shipments.filter((shipment) => {
-      const shipmentNumber = String(shipment.ShipmentNumber);
-      return shipmentNumber.toLowerCase().includes(lowercasedSearchTerm);
-    });
-
-    setFilteredShipments(filteredShipments);
+  
+    if (lowercasedSearchTerm.trim() === '') {
+      // If the search term is empty, show all shipments
+      setFilteredShipments(shipments);
+    } else {
+      // If there is a search term, filter shipments
+      const filteredShipmentsResult = shipments.filter((shipment) => {
+        const shipmentNumber = String(shipment.ShipmentNumber);
+        return shipmentNumber.toLowerCase().includes(lowercasedSearchTerm);
+      });
+  
+      setFilteredShipments(filteredShipmentsResult);
+    }
   };
+  
+  
 
   return (
     <Lay>
@@ -136,6 +149,12 @@ const ShipmentDetails = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             fullWidth
             style={{ marginRight: '10px' }}
+  InputLabelProps={{
+    style: { color: 'white' },
+  }}
+  InputProps={{
+    style: { color: 'white' },
+  }}
           />
           <Button
             type="button"
@@ -171,7 +190,7 @@ const ShipmentDetails = () => {
                     <Typography variant="body1">Delivery Number: {shipment.DeliveryNumber}</Typography>
                     <Typography variant="body1">Batch ID: {shipment.BatchId}</Typography>
                     <Typography variant="body1">Shipment Description: {shipment.ShipmentDescription}</Typography>
-                    <Button className="favorite styled" type="button" onClick={() => handlePrint(shipment)}>Print</Button>
+                    
                   <Button className="favorite styled" type="button" onClick={() => handlePrint(shipment)}>Print</Button>
                 </CardContent>
               </Card>

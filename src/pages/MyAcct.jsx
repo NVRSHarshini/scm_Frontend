@@ -64,7 +64,7 @@ const UserProfile = () => {
 
   return (
     <Lay>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', background: 'linear-gradient(lightaqua, black)' }}>
+      <div style={{ marginTop:'80px',display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', background: 'linear-gradient(lightaqua, black)' }}>
         <center>
           <div className="customer-card"style={{ marginTop: '20px',marginBottom:'20px' }}>
             <Card style={{backgroundImage: `url(${img})`,backgroundSize: 'cover',backgroundRepeat: 'no-repeat',width:'700px',height: '400px'}}>
