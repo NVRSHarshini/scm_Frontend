@@ -1,0 +1,209 @@
+:root {
+  --lightblk: #252930;
+  --blk: #111417;
+  --blue: #bde0fe;
+  --red: #f08080;
+  --bg: #ffffff;
+  --green: #60f79d;
+}
+
+/* body {
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  margin: 0; */
+  /* background-image: url('../images/bg_three.jpg'); 
+  background-size: cover;  
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  object-fit: cover;
+  width: 280px; */
+  /* background:rgb(174, 210, 216), 167, 207);  */
+     
+/*   
+} */
+ /* #backgrounds{
+  background-image: url('../images/bg_chat.webp');
+   /* background-image:linear-gradient(to right,#81c0c4, #0F919E,#037986,#477879,#81c0c4, #0F919E); */
+   /*background-size: cover;
+   align-items: center;
+    height:1000px; 
+   /* width: 1857px;
+   height: 1900px; */
+   /* padding-left: 150px; */
+	
+ /*}*/ 
+
+ .carousel {
+  padding: 1em;
+  margin: auto;
+  gap: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  padding-top: 150px;
+  padding-left: 200px;
+  padding-right: 150px;
+  height: 10px;
+ 
+}
+
+.container {
+  cursor: pointer;
+  flex-basis: 1;
+  transition: 0.5s;
+  box-sizing: border-box;
+  flex-direction: column;
+  border-radius: 10px;
+  display: flex;
+  position: relative;
+  width: 300px;
+  height: 500px;
+  background: none;
+  object-fit: cover;
+
+}
+
+.img {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  border-radius: 10px;
+  /* opacity: 0.8; */
+ 
+}
+
+.overlay {
+  transition: 0.5s;
+  border-radius: 10px;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  text-align: left;
+  padding: 1em;
+
+}
+
+.btn {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 1em;
+  transition: 0.4s;
+  background: none;
+  fill: white;
+  float: right;
+  gap: 10px;
+}
+
+.container:hover {
+  /* z-index: 1; */
+  transform: scale(1.10);
+   box-shadow: -20px 20px 50px 1px #b3e8ee;
+}
+
+.txt {
+  color: rgb(241, 241, 241);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-size: 50px;
+  padding-top: 200px;
+  text-align: center;
+  text-shadow: #111417;
+  
+}
+.sub{
+  color: rgb(255, 255, 255);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-size: 20px;
+  padding-top: 70px;
+  text-align: center;
+  text-shadow: #111417;
+}
+.description {
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* Style for the footer */
+.footer {
+  margin-top: 10px;
+  font-weight: bold;
+}
+svg {
+  height: 25px;
+  width: 25px;
+}
+
+svg:hover {
+  transform: scale(1.1);
+}
+
+.user {
+  fill: white;
+  height: 35px;
+  width: 35px;
+  padding-right: 0.2em;
+}
+
+.right {
+  margin-right: auto;
+}
+
+.left {
+  margin-left: auto;
+  padding-left: 100px;
+}
+
+.logouticon{
+  position:absolute;
+     top:0;
+     right:0;
+}
+/* In your CSS file or component */
+.small-icon {
+  width: 50px; /* Adjust the width as needed */
+  height: 50px; /* Let the height adjust proportionally */
+  /* vertical-align: middle; Align the image vertically */
+}
+
+
+.small-icon:hover{
+  transform: scale(1.1);
+}
+/* Add this in your Dashboard.css or relevant CSS file */
+/* .marquee-container {
+  display: flex;
+  align-items: center;
+ 
+  height: 30px; /* Adjust height as needed */
+ 
+  /*margin-bottom: 100px; /* Adjust this margin to move it upwards */
+/*} */
+
+.custom-marquee {
+  margin-top: 20px;
+  /* width: '100vh'; Take full width of the container */
+  font-size: 25px; /* Adjust font size as needed */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing content */
+  /* margin: 0; /* Reset margins */
+  /*padding: 0; Reset padding */
+  font-style:italic;
+  color: #ffff;
+  background-image:linear-gradient(to right,#aabb11,#11bbb2,#aabb11) ;
+  /* background-image: linear-gradient(to right,#020909,#022D31,#037986,#81c0c4, #0F919E,#037986,#477879,#020909); */
+}
+
+
+

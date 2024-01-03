@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
+
+/* body{
+  background: url('http://all4desktop.com/data_images/original/4236532-background-images.jpg');
+  font-family: 'Roboto Condensed', sans-serif;
+  color: #262626;
+  margin: 5% 0;
+} */
+.container{
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+/* @media (min-width: 1200px)
+{
+  .container{
+    max-width: 1140px;
+  }
+} */
+.d-flex{
+  display: flex;
+  flex-direction: row;
+  background: #f6f6f6;
+  border-radius: 0 0 5px 5px;
+  padding: 25px;
+}
+form{
+  flex: 4;
+  margin-right: 30px;
+    margin-left: 30px;
+    border: 2px solid #104d5e;
+}
+
+.Yorder{
+  flex: 2;
+}
+.title{
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0, #5195A8), color-stop(100, #70EAFF));
+  background: -moz-linear-gradient(top left, #5195A8 0%, #70EAFF 100%);
+  background: -ms-linear-gradient(top left, #5195A8 0%, #70EAFF 100%);
+  background: -o-linear-gradient(top left, #5195A8 0%, #70EAFF 100%);
+  background: linear-gradient(to bottom right, #5195A8 0%, #70EAFF 100%);
+  border-radius:5px 5px 0 0 ;
+  padding: 20px;
+  color: #f6f6f6;
+}
+h2{
+  margin: 0;
+  padding-left: 15px; 
+}
+.required{
+  color: red;
+}
+label, table{
+  display: block;
+  margin: 15px;
+}
+label>span{
+  float: left;
+  width: 25%;
+  margin-top: 12px;
+  padding-right: 10px;
+}
+input[type="text"], input[type="tel"], input[type="email"], select
+{
+  width: 70%;
+  height: 30px;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  border: 1px solid #dadada;
+  color: #888;
+}
+select{
+  width: 72%;
+  height: 45px;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+}
+.Yorder{
+  margin-top: 15px;
+  height: 600px;
+  padding: 20px;
+  border: 1px solid #dadada;
+}
+table{
+  margin: 0;
+  padding: 0;
+}
+th{
+  border-bottom: 1px solid #dadada;
+  padding: 10px 0;
+}
+tr>td:nth-child(1){
+  text-align: left;
+  color: #2d2d2a;
+}
+tr>td:nth-child(2){
+  text-align: right;
+  color: #52ad9c;
+}
+td{
+  border-bottom: 1px solid #dadada;
+  padding: 25px 25px 25px 0;
+}
+
+p{
+  display: block;
+  color: #888;
+  margin: 0;
+  padding-left: 25px;
+}
+.Yorder>div{
+  padding: 15px 0; 
+}
+
+button{
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 30px;
+  background: #52ad9c;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+}
+button:hover{
+  cursor: pointer;
+  background: #428a7d;
+}
+
+
+.button-77 {
+  background-color: #c4cf24;
+  background-image: linear-gradient(to right,#020909,#022D31,#81c0c4, #0F919E,#037986,#477879,#020909);
+  border: 0;
+  border-radius: .25rem;
+  /* box-sizing: border-box; */
+  height: auto;
+  width: auto;
+  color: #fff;
+  cursor: pointer;
+  font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+  line-height: 1.75rem; /* 28px */
+  padding: 1rem 1.25rem;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-left: 47px;
+}
+
+ .button-77:hover {
+    box-shadow: none;
+  }
+  
+  @media (min-width: 1024px) {
+    .button-77 {
+      font-size: 1.5rem; /* 24px */
+       padding: 1rem 1.5rem;
+      line-height: 2rem; /* 32px */
+    }
+  } 
+  .labels {
+    color: rgb(0, 0, 0);
+    font-size: large;
+  }
+  .custom-date-picker .react-datepicker-wrapper {
+    width: 100%; /* Adjust the width as needed */
+  }
+  
+  .custom-date-picker .react-datepicker {
+    font-size: 14px; /* Adjust the font size as needed */
+  }
+  
+  .custom-date-picker .react-datepicker__input-container input {
+    width: calc(100% - 20px); /* Adjust the input width as needed */
+    height: 36px; /* Adjust the height as needed */
+    padding: 8px; /* Adjust padding as needed */
+  }
+  .dropdown-header {
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 847px;
+    font-size: med;
+  }
+  
+  .dropdown-body {
+    padding: 5px;
+    border-top: 1px solid #E5E8EC;
+    display: none;
+    width:fit-content;
+    font-size: medium;
+  }
+  
+  .dropdown-body.open {
+    display: block;
+    width: auto;
+    font-size: medium;
+  }
+  
+  .dropdown-item {
+    padding: 10px;
+    font-size: medium;
+  }
+  
+  .dropdown-item:hover {
+    cursor: pointer;
+    font-size:medium;
+  }
+  
+  .dropdown-item-dot {
+    opacity: 0;
+    color: #91A5BE;
+    transition: all .2s ease-in-out;
+    font-size: medium;
+  }
+  
+  .dropdown-item-dot.selected {
+    opacity: 1;
+    font-size: medium;
+  }
+
+  .buttons {
+    width: 200px;
+    margin: 0 auto;
+    display: inline;}
+    
+        .action_btn {
+    width: 200px;
+    margin: 0 auto;
+    display: inline;}

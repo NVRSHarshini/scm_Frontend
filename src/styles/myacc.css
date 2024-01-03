@@ -1,0 +1,70 @@
+.customer-card {
+  position: relative;
+  overflow: hidden;
+  width: 0;
+  height: 650px; /* Increase the height as needed */
+  transition: height 0.5s ease-out; /* Adjust timing and easing as needed */
+  padding: 20px; /* Increase the padding inside the card */
+}
+
+.customer-card.expand {
+  width: 400px; /* Adjust the expanded width as needed */
+  height: 850px; /* Adjust the expanded height as needed */
+}
+
+/* Adjust font size and padding of internal elements as needed */
+.customer-card .input-block {
+  margin-bottom: 30px;
+}
+
+.customer-card label {
+  font-size: 24px; /* Increase label font size */
+}
+
+.customer-card input,
+.customer-card select {
+  width: 100%;
+  padding: 15px;
+  font-size: 20px; /* Increase input/select font size */
+}
+
+/* Adjust the size of buttons as needed */
+.customer-card .button-77 {
+  padding: 20px 30px;
+  font-size: 20px; /* Increase button font size */
+}
+.card-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  color: white;
+  background: linear-gradient(lightaqua, black);
+}
+
+.moving-card {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  animation: slideRight 2s ease-out forwards; /* Adjust the animation duration and easing as needed */
+}
+
+/* Keyframes animation to move the card from left to right */
+@keyframes slideRight {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+.card-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 800px;
+  height: 400px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
