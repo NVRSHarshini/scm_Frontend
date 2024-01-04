@@ -40,8 +40,8 @@ const UserProfile = () => {
         // }
 
         const userEmail = extractEmailFromToken(token) + '@gmail.com';
-
-        const response = await axios.get(`http://127.0.0.1:8000/profile?email=${userEmail}`, {
+        console.log(userEmail);
+        const response = await axios.get(`http://127.0.0.1:8000/profile/${encodeURIComponent(userEmail)}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             // 'Content-Type': 'application/json',
@@ -49,6 +49,7 @@ const UserProfile = () => {
         });
 
         setUserProfile(response.data);
+        console.log(UserProfile);
       } catch (error) {
         console.error('Error fetching user profile:', error);
        // alert('Unauthorized,Please login');

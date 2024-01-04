@@ -145,11 +145,11 @@ export default function Registration() {
         .then(response => {
           if (response.status === 200) {
             console.log(response.data, response.status);
-            navigate('/registration');
+            navigate('/');
             switchForm('login');
           } else {
             console.log(response.data);
-            navigate('/registration'); // Handle other status codes accordingly
+            navigate('/'); // Handle other status codes accordingly
           }
         })
         .catch(error => {

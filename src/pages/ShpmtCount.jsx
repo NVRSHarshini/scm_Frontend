@@ -9,6 +9,7 @@ import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 const ShipmentCountCard = () => {
   const [shipmentCount, setShipmentCount] = useState(0);
+ 
   const navigate = useNavigate();
 
   const extractEmailFromToken = (token) => {
@@ -31,35 +32,46 @@ const ShipmentCountCard = () => {
     const fetchShipmentCount = async () => {
       try {
         const token = localStorage.getItem('token');
-
+  
         if (!token) {
           throw new Error('Token is missing');
         }
-
+  
         const userEmail = extractEmailFromToken(token) + '@gmail.com';
-
-        const response = await axios.get(`http://127.0.0.1:8000/ship/${userEmail}`, {
+  
+        const response = await axios.get(`http://127.0.0.1:8000/ship/${encodeURIComponent(userEmail)}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         });
-
+  
+        console.log(response.data);
         setShipmentCount(response.data.length);
       } catch (error) {
         console.error('Error fetching shipment count:', error);
-        // Handle error, e.g., redirect to login page
-        navigate('/registration');
+  
+        // Check if the error is a 404 Not Found
+        if (error.response && error.response.status === 404) {
+          console.log('No shipments found for the user.');
+          
+          // Handle the case where no shipments are found (e.g., set the count to 0)
+        } else {
+          // Handle other errors, e.g., redirect to login page
+          navigate('/');
+        }
       }
     };
-
+  
     fetchShipmentCount();
-  }, [navigate]);
+  }, []);
+
+    
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',  color: 'white', background: 'linear-gradient(lightaqua, black)' }}>
         <center>
-    <Card style={{backgroundImage: `url(${img})`,backgroundSize: 'cover',backgroundRepeat: 'no-repeat',  width: '400px' }}>
+          {shipmentCount?(  <Card style={{backgroundImage: `url(${img})`,backgroundSize: 'cover',backgroundRepeat: 'no-repeat',  width: '400px' }}>
       <CardContent>
         <Typography variant="h6" gutterBottom sx={{ color: 'white' }}>
           Number of Shipments Created
@@ -71,7 +83,10 @@ const ShipmentCountCard = () => {
             </Button>
           </Link>     
       </CardContent>
-    </Card>
+    </Card>): (
+                  <Typography variant="body1" style={{ color: 'white', textAlign: 'center',fontSize: '24px' }}>Loading...</Typography>
+                )}
+  
     </center>
     </div>
   );
