@@ -1,75 +1,47 @@
 import React, { useState,useRef,useEffect } from 'react';
-import { format } from 'date-fns';
-//import ParticleEffect from '../pages/ParticleEffect.jsx';
-// import Layout from "../component/Layout";
-import "../styles/Create_ship.css";
+import { format,addDays  } from 'date-fns';
 import DatePicker from 'react-datepicker';
-import { addDays } from 'date-fns';
-import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import Lay from '../component/Lay';
 import img from '../images/bg_chat.webp';
-
-// import { ToastProvider, useToasts } from 'react-toast-notifications';
-// import imgs from '../images/cre.jpg';
+import 'react-datepicker/dist/react-datepicker.css';
+import "../styles/Create_ship.css";
 export default function Create_Ship() {
-  // const { addToast } = useToasts();
-////......progress bar
-const [formProgress, setFormProgress] = useState(0); // State to track form progress
-
-// Calculate the total number of fields in the form
-const totalFields = 12; // Change this based on the actual number of fields
-
-// Update form progress whenever a field is filled
-// const calculateProgress = () => {
-//   const filledFields = Object.values(formData).reduce((acc, value) => {
-//     if (value !== '' && value !== null && value !== undefined) {
-//       return acc + 1;
-//     }
-//     return acc;
-//   }, 0);
-
-//   const progress = Math.round((filledFields / totalFields) * 100);
-//   setFormProgress(progress);
-  
-// };
-
-////........progress bar end
-
-
+  const [formProgress, setFormProgress] = useState(0); // State to track form progress
+  const totalFields = 12; 
 
   const mainContainerRef = useRef(null);
 
   
   const [focused, setFocused] = useState(false);
-  const navigate = useNavigate();
+  
   const data = [
-    { id: 0, label: "Route A" },
-    { id: 1, label: "Route B" },
-    { id: 2, label: "Route C" },
-    { id: 3, label: "Route D" },
-    { id: 4, label: "Route E" }
-  ];
-  
-  const data_device = [
-    { id: 0, label: "Device 1" },
-    { id: 1, label: "Device 2" },
-    { id: 2, label: "Device 3" },
-    { id: 3, label: "Device 4" },
-    { id: 4, label: "Device 5" }
-  ];
-  
-  const data_goods = [
-    { id: 0, label: "Goods 1" },
-    { id: 1, label: "Goods 2" },
-    { id: 2, label: "Goods 3" },
-    { id: 3, label: "Goods 4" },
-    { id: 4, label: "Goods 5" }
-  ];
+    { id: 1, label: "City Express" },
+    { id: 2, label: "Highway Connector" },
+    { id: 3, label: "Scenic Route" },
+    { id: 4, label: "Urban Shortcut" },
+    { id: 5, label: "Coastal Drive" }
+];
+
+const data_device = [
+    { id: 101, label: "GPS Navigator" },
+    { id: 102, label: "Temperature Sensor" },
+    { id: 103, label: "Fuel Gauge" },
+    { id: 104, label: "Traffic Camera" },
+    { id: 105, label: "Proximity Sensor" }
+];
+
+const data_goods = [
+    { id: 201, label: "Electronics" },
+    { id: 202, label: "Clothing" },
+    { id: 203, label: "Fresh Produce" },
+    { id: 204, label: "Industrial Equipment" },
+    { id: 205, label: "Books and Media" }
+];
+
   const today = new Date();
   const maxDate = addDays(today, 365); 
-    const [selectedDate2, setSelectedDate2] = useState(null); 
+  const [selectedDate2, setSelectedDate2] = useState(null); 
   const formattedDate = selectedDate2 ? format(selectedDate2, 'yyyy/MM/dd') : '';
 
 
@@ -103,15 +75,6 @@ const totalFields = 12; // Change this based on the actual number of fields
    
   });
 
-  
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({ ...formData, [name]: value });
-  //   calculateProgress();
-  //   // For regular input fields (not dropdowns)
-    
-  // };
   const handleCreateShipment = (e) => {
     e.preventDefault();
   
@@ -158,11 +121,8 @@ const totalFields = 12; // Change this based on the actual number of fields
       },
     })
     .then(response => {
-      if (response.status === 200) {
-        // addToast('Shipment created successfully!', { appearance: 'success' });
-        
-        console.log('Shipment created:', response.data);
-       
+      if (response.status === 200) {   
+        // Handle success scenario for shipment creation         
         setFormData({
           email: '',
           ShipNo: '',
@@ -184,12 +144,13 @@ const totalFields = 12; // Change this based on the actual number of fields
         setSelectedDevice(''); 
         setSelectedGoods(''); 
         setFormProgress(0);
-        // Handle success scenario for shipment creation
+        
       } else if (response.status === 409) {
+         // Handle conflict scenario
         console.log('Conflict:', response.data);
-        // Handle conflict scenario
+       
       }
-      // Add more conditionals if needed for different status codes
+      // conditionals for different status codes
     })
     .catch(error => {
       // Handle error
@@ -209,9 +170,7 @@ const totalFields = 12; // Change this based on the actual number of fields
   };
   
   const handleClear = () => {
-    console.log('Before clearing formData:', formData);
-  
-    setFormData({
+   setFormData({
       email: '',
       ShipNo: '',
       routeDetails: '', 
@@ -231,9 +190,7 @@ const totalFields = 12; // Change this based on the actual number of fields
     setSelectedRoute(''); 
     setSelectedDevice(''); 
     setSelectedGoods(''); 
-    setFormProgress(0);
-  
-    console.log('After clearing formData:', formData);
+    setFormProgress(0);  
   };
   
   const handleSelectRoute = (event) => {
@@ -422,127 +379,7 @@ const totalFields = 12; // Change this based on the actual number of fields
       </div>
       </div>
       </div> 
-      {/* </div> */}
+     
     </Lay>
   );
 }
-
-
-// import React from "react";
-// import { useState } from "react";
-// import Layout from "../component/Layout";
-// import "../styles/dropdown.css";
-
-// export default function Create_Ship(){
-
-//     const data = [{ id: 0, label: "Route1" }, { id: 1, label: "Route2" }];
-//     const data_device=[{ id: 0, label: "Device1" }, { id: 1, label: "Device2" }];
-   
-    
-//         const [isOpen, setOpen] = useState(false);
-//         const [items, setItem] = useState(data);
-//         const [dev,setDev]=useState(data_device);
-//         const [selectedItem, setSelectedItem] = useState(null);
-//         const [selectedDev, setSelectedDev] = useState(null);
-      
-//         const toggleDropdown = () => setOpen(!isOpen);
-      
-//         const handleItemClick = (id) => {
-//           selectedItem === id ? setSelectedItem(null) : setSelectedItem(id);
-//         }
-//     const [formData, setFormData] = useState({
-//         Name: '',
-//         email: '',
-//         password: '',
-//         phone: '',
-//       });
-//     const handleSubmit=()=>{
-
-//     }
-//     const handleChange = (e) => {
-//         setFormData({ ...formData, [e.target.name]: e.target.value });
-//       };
-//     return(
-//         <Layout>
-         
-//         <form className="form form-login" >
-//         <div className="input-block">
-//             <label htmlFor="number">Shipment Number</label>
-//             <input id="ShipNo" type="text" name="Shipno" onChange={handleChange}/>
-//             </div>
-//             <div className="input-block">
-//         <label htmlFor="shipmentType">Route Details</label>
-//         <div className='dropdown'>
-//       <div className='dropdown-header' onClick={toggleDropdown}>
-//         {selectedItem ? items.find(item => item.id === selectedItem).label : "Select your destination"}
-//         <i className={`fa fa-chevron-right icon ${isOpen && "open"}`}></i>
-//       </div>
-//       <div className={`dropdown-body ${isOpen && 'open'}`}>
-//         {items.map(item => (
-//           <div className="dropdown-item" onClick={() => handleItemClick(item.id)} key={item.id}>
-//             <span className={`dropdown-item-dot ${item.id === selectedItem && 'selected'}`}>• </span>
-//             {item.label}
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//       </div>
-
-
-//       <div className="input-block">
-//         <label htmlFor="shipmentType">Device</label>
-//         <div className='dropdown'>
-//       <div className='dropdown-header' onClick={toggleDropdown}>
-//         {selectedDev ? dev.find(dev=> dev.id === selectedDev).label : "Select device"}
-//         <i className={`fa fa-chevron-right icon ${isOpen && "open"}`}></i>
-//       </div>
-//       <div className={`dropdown-body ${isOpen && 'open'}`}>
-//         {items.map(item => (
-//           <div className="dropdown-item" onClick={() => handleItemClick(item.id)} key={item.id}>
-//             <span className={`dropdown-item-dot ${item.id === selectedItem && 'selected'}`}>• </span>
-//             {item.label}
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//       </div>
-
-
-
-//             <div className="input-block">
-//             <label htmlFor="number">PPO Number</label>
-//             <input id="PPoNo" type="text" name="PPono" onChange={handleChange}/>
-//             </div>
-//             <div className="input-block">
-//             <label htmlFor="number">NDC Number</label>
-//             <input id="NDCNo" type="text" name="NDCno" onChange={handleChange}/>
-//             </div>
-//             <div className="input-block">
-//             <label htmlFor="number">Serial Number of goods</label>
-//             <input id="SerialNo" type="text" name="SerialNo" onChange={handleChange}/>
-//             </div>
-//            {/* < <fieldset>
-//               <h2 className="colorful-text">Please enter your credentials for login</h2>
-
-//               <div className="input-block">
-//                 <label htmlFor="login-email">E-mail</label>
-//                 <input id="login-email" type="email" name="email" onChange={handleChange} required />
-//               </div>
-//               <div className="input-block">
-//                 <label htmlFor="login-password">Password</label>
-//                 <input id="login-password" type="password" name="password" onChange={handleChange} required />
-//               </div>
-//             </fieldset>
-//             <button type="submit" className="btn-login">Login</button>> */}
-         
-//           </form>
-//           <form>
-//           <div className="input-block">
-//             <label htmlFor="number">Container Number</label>
-//             <input id="SerialNo" type="text" name="SerialNo" onChange={handleChange}/>
-//             </div>
-//           </form>
-          
-//         </Layout>
-//     )
-//  }

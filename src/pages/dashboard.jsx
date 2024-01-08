@@ -4,7 +4,7 @@ import '../styles/Dashboard.css';
 import Lay from '../component/Lay';
 import D from "../images/Dev_strm.jpg";
 import MyAccount from '../pages/sign_in';
-import MyShipment from '../pages/myShip';
+import MyShipment from '../pages/Print';
 import NewShipment from '../pages/Create_ship';
 
 const Dashboard = () => {

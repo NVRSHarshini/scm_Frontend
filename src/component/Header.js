@@ -9,28 +9,23 @@ import {
   Typography,
 } from "@mui/material";
 
-// import three from '../images/three.png';
-// import login from "../pages/Login";
-// import Registration from "../pages/Registration";
 import logo from "../images/logo_E.jpg";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
 import "../styles/HeaderStyles.css";
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  // hndle menu click
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-   // Handle logout
+   
    const handleLogout = () => {
-    // Clear local storage items related to authentication
-    localStorage.removeItem("token"); // Remove token or any other relevant data
-
-    // You can redirect to the login page or perform any other action after logout
-    // For example, redirecting to the login page
-    window.location.href = "/registration";
+    // Clear local storage items related to authentication : token
+    localStorage.removeItem("token"); 
+    window.location.href = "/";
   };
+
   //menu drawer
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -49,30 +44,20 @@ const Header = () => {
             Home
           </NavLink>
         </li>
-        {/* <li>
-          <NavLink to={"/registration"}>Registration</NavLink>
-        </li> */}
-         {/*<li>
-          <NavLink to={"/login"}>Login</NavLink>
-        </li>*/}
-  <li>
+        <li>
           <NavLink to={"/myAcct"}>Profile</NavLink>
         </li>
         <li>
-                  <NavLink to={"/print"}>My Shipment</NavLink>
-                </li>
-        
+          <NavLink to={"/print"}>My Shipment</NavLink>
+        </li>        
         <li>
           <NavLink to={"/newShip"}>Create Shipment</NavLink>
         </li>
         <li>
-        <NavLink to={"/registration"} onClick={handleLogout}>
+          <NavLink to={"/registration"} onClick={handleLogout}>
           Logout
-        </NavLink>
-      </li>
-        {/*<li>
-          <NavLink to={"/feedback"}>Feedback</NavLink>
-        </li>  */}
+          </NavLink>
+        </li>       
       </ul>
     </Box>
   );

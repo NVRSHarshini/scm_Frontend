@@ -1,10 +1,9 @@
 // Import necessary libraries
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import '../styles/style.css'; // Adjust the path based on your project structure
+import { useNavigate } from 'react-router-dom'; 
 import qs from 'querystring'; 
-
+import '../styles/style.css'; 
 
 
 export default function Registration() {
@@ -28,8 +27,7 @@ export default function Registration() {
      password: formData.password,
  };
   const [activeForm, setActiveForm] = useState('login');
-  const navigate = useNavigate(); // Use useNavigate for navigation
-
+  const navigate = useNavigate(); 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -43,45 +41,14 @@ export default function Registration() {
     e.preventDefault();
 
     try {
-      // Make a POST request to your backend API
+      // POST request to  backend API
       const response = await axios.post(`http://127.0.0.1:8000/registration`, formData);
-
-      // Handle the response accordingly (you can add more logic here)
-      console.log(response.data);
     } catch (error) {
       // Handle errors
       console.error('Error during registration:', error);
     }
   };
-  // const handleLogin = async (e) => {
-  //   const errors = validate(formData);
-  
-  //   if (Object.keys(errors).length === 0) {
-  //   e.preventDefault();
-  
-  //   const loginData = {
-  //     email: formData.email,
-  //     password: formData.password,
-  //   };
-  //  console.log(loginData);
-  //   try {
-  //     const response = await axios.post('http://127.0.0.1:8000/login', loginData);
-  
-  //     console.log(response.data);
-  
-  //     if (response.status === 200) {
-  //       localStorage.setItem('token', response.data.access_token);
-  //       navigate('/success');
-  //     } else {
-  //       // Handle login failure
-  //       console.log(response.data);
-  //       // Show an error message to the user
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     // Handle other errors, show an error message to the user
-  //   }
-  // }};
+ 
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -115,9 +82,7 @@ export default function Registration() {
           }
         }
       } catch (error) {
-        console.error('Error during login:', error);
-        // Handle other errors, show an error message to the user
-        //setLoginError('Error during login. Please refresh and try again.');
+        console.error('Error during login:', error);      
         setLoginError('Invalid credentials. Please try again.');
       }
     } else {
@@ -167,19 +132,9 @@ export default function Registration() {
     }
   };
   
-  const pageStyle = {
-    margin: 0, /* Remove default margin */
-  padding: 0, /* Remove default padding */
-  
-    backgroundImage: `url(${require('../images/background_login.jpg')})`,
-
-    backgroundSize: 'cover', // Cover the entire area of the div
-    backgroundPosition: 'center', // Center the image within the div
-    /* Add other styles as needed */
-  };
+ 
   function validateLoginForm(formData) {
     let errors = {};
-
     // validate email
     if (!formData.email.trim()) {
       errors.email = "Email is required";

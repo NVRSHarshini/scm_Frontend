@@ -12,7 +12,7 @@
 
 /* myShip.css */
 .see-customers {
-  background-image: url('C:\Users\harshini\Documents\project_scm\scm_frontend\src\images\plainBg.jpg'); /* Replace 'path_to_your_image.jpg' with the actual path to your image */
+  background-image: url('C:\Users\harshini\Documents\project_scm\scm_frontend\src\images\DevData.jpg'); /* Replace 'path_to_your_image.jpg' with the actual path to your image */
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 93vh; /* Ensure the background covers the entire viewport height */

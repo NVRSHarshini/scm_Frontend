@@ -3,7 +3,7 @@ import axios from 'axios';
 import Lay from "../component/Lay.js";
 import { Button, Card, CardContent, Typography, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import img from "../images/DevData.jpg";
+import img from "../images/plainBg.jpg";
 const DeviceData = () => {
   const navigate = useNavigate();
   const [deviceData, setDeviceData] = useState([]);
@@ -27,14 +27,15 @@ const DeviceData = () => {
 
   return (
     <Lay >
-      <div style={{  color: 'cyan', backgroundImage: `url(${img})`,backgroundRepeat:'no-repeat', backgroundSize: 'contain' ,minHeight: '100vh',minWidth:'300px'}}>
-        
-        <div><center><h1 className="mb-4" style={{ color: "#232B2B" }}>Device Data</h1></center>
+      <div style={{ color: 'cyan', backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', minHeight: '100vh', minWidth: '300px' }}>
+
+        <div><center><h1 className="mb-4" style={{ color: "white" }}>Device Data</h1></center>
         <div
           className="back-button"
           onClick={handleBack}
           role="button"
           tabIndex={0}
+          style={{marginTop:'20px'}}
         >
           <div className="arrow-wrap">
             <span className="arrow-part-1"></span>

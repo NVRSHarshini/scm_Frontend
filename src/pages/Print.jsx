@@ -48,6 +48,7 @@ const ShipmentDetails = () => {
       <h1>Shipment Details</h1>
       <div>
         <h3>Shipment ID: ${shipment._id}</h3>
+        <h3>Shipment Email: ${shipment.email}</h3>
         <p>Shipment Number: ${shipment.ShipmentNumber}</p>
         <p>Route Details: ${shipment.RouteDetails}</p>
         <p>Device: ${shipment.Device}</p>
@@ -178,6 +179,7 @@ const ShipmentDetails = () => {
                   }
                 />
                 <CardContent>
+                <Typography variant="body1">Shipment Email: {shipment.email}</Typography>
                   <Typography variant="body1">Shipment Number: {shipment.ShipmentNumber}</Typography>
                     <Typography variant="body1">Route Details: {shipment.RouteDetails}</Typography>
                     <Typography variant="body1">Device: {shipment.Device}</Typography>
