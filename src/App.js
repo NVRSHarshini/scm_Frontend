@@ -10,12 +10,14 @@ import Print from './pages/Print.jsx';
 import { ToastProvider, useToasts } from 'react-toast-notifications';
 import Error403Page from './pages/Error403Page.jsx';
 import DeviceData from './pages/DeviceData.jsx';
+import MyAccount from "./pages/MyAcct.jsx";
 function App() {
   return (
     <ToastProvider>
     <Router>
       <Routes>
       <Route exact path="/" element={<Registration/>} />
+      <Route exact path="/myAcct" element={<MyAccount/>}/>
         <Route exact path="/dashboard" element={<Dashboard/>} />        
         <Route exact path="/success" element={<SuccessPage/>} />       
         <Route exact path="/newShip" element={<Create_ship/>}/>               
