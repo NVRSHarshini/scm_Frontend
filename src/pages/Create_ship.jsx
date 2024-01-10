@@ -8,16 +8,16 @@ import { useNavigate } from 'react-router-dom';
 import 'react-datepicker/dist/react-datepicker.css';
 import "../styles/Create_ship.css";
 export default function Create_Ship() {
-  const navigation = navigation();
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     
     const token = localStorage.getItem('token'); 
     if (!token) {
      
-      navigation.navigate('/'); 
+      navigate('/'); 
     }
-  }, [navigation]); 
+  }, [navigate]); 
   const [formProgress, setFormProgress] = useState(0); // State to track form progress
   const totalFields = 12; 
 
