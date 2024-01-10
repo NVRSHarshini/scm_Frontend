@@ -17,7 +17,7 @@ const ShipmentDetails = () => {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
-          navigate('/registration');
+          navigate('/');
         }
 
         const decodedToken = JSON.parse(atob(token.split('.')[1]));

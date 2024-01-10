@@ -4,9 +4,20 @@ import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import Lay from '../component/Lay';
 import img from '../images/bg_chat.webp';
+import { useNavigate } from 'react-router-dom';
 import 'react-datepicker/dist/react-datepicker.css';
 import "../styles/Create_ship.css";
 export default function Create_Ship() {
+  const navigation = navigation();
+
+  useEffect(() => {
+    
+    const token = localStorage.getItem('token'); 
+    if (!token) {
+     
+      navigation.navigate('/'); 
+    }
+  }, [navigation]); 
   const [formProgress, setFormProgress] = useState(0); // State to track form progress
   const totalFields = 12; 
 
