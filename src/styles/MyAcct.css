@@ -1,0 +1,53 @@
+
+#dashboard-container {
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: linear-gradient(lightaqua, black);
+}
+
+.customer-card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.customer-card .card {
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 700px;
+  height: 400px;
+}
+
+.card-content {
+  text-align: center;
+  width: 400px;
+  height: 250px;
+  margin-top: 70px;
+}
+
+.card-content .account-icon {
+  color: cyan;
+  font-size: 50px;
+  
+}
+
+.card-content .username {
+  color: white;
+  font-size: 34px;
+}
+
+.card-content .user-details {
+  font-family:Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  color: white;
+  font-size: 28px;
+}
+
+.loading-text {
+  color: white;
+  text-align: center;
+  font-size: 30px;
+}

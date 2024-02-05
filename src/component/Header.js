@@ -22,7 +22,7 @@ const Header = () => {
    
    const handleLogout = () => {
     // Clear local storage items related to authentication : token
-    localStorage.removeItem("token"); 
+    sessionStorage.removeItem("token"); 
     window.location.href = "/";
   };
 
@@ -54,7 +54,7 @@ const Header = () => {
           <NavLink to={"/newShip"}>Create Shipment</NavLink>
         </li>
         <li>
-          <NavLink to={"/registration"} onClick={handleLogout}>
+          <NavLink to={"/"} onClick={handleLogout}>
           Logout
           </NavLink>
         </li>       
@@ -95,7 +95,7 @@ const Header = () => {
                 </NavLink>
               </li>
               <li style={{ marginLeft: '20px' }}>
-        <NavLink to={"/registration"} onClick={handleLogout}>
+        <NavLink to={"/"} onClick={handleLogout}>
           Logout
         </NavLink>
       </li>

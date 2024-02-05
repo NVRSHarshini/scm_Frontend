@@ -7,7 +7,7 @@ import img from "../images/plainBg.jpg";
 
 const DeviceData = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   const [deviceData, setDeviceData] = useState([]);
   const [deviceId, setDeviceId] = useState('');
   const [tableData, setTableData] = useState([]);

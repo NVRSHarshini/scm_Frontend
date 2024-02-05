@@ -12,7 +12,7 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
 	/* width: 1857px;*/
-	height: 1100px; 
+	height: 945px; 
 	padding-left: 100px;
 }
 
@@ -249,7 +249,7 @@
 
 .input-block label {
 	font-size: 14px;
-  color: #a1b4b4;
+  color: #044141;
 }
 
 .input-block input {
@@ -289,7 +289,9 @@
 	background: #a7e245;
 	transform: translateX(-30%);
 }
-
+.btn-login:hover {
+	background-image: linear-gradient(to right, #020909, #022D31, #81c0c4, #0F919E, #037986, #477879, #020909);
+  }
 .btn-signup {
 	color: #a7e245;
 	background: #fbfdff;
@@ -426,4 +428,27 @@
   background-color: #303030;
   opacity: 8%;
 }
-/*...........end of google icon code..........*/
+.captcha-container {
+	display: flex;
+	align-items: center;
+  }
+  
+  .dotted-box {
+	
+	border:1px dashed #0a776e;/*  Change to your preferred color */
+	padding: 10px;
+	
+	
+  }
+  
+  
+  .TextCaptcha {
+	font-weight: bold;
+  font-style: italic;
+  display: inline-block;
+  margin-right: 8px;
+  background: linear-gradient(90deg, #000, #b30606, #000); /* Black to CyanBlue gradient */
+  -webkit-background-clip: text;
+  color: transparent; /* Make text transparent to reveal the gradient background */
+  padding: 3px;
+  }

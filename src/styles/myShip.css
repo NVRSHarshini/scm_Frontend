@@ -1,33 +1,33 @@
 
 .shipment-details-container {
-    border: 1px solid #ccc; /* Border for the container */
-    border-radius: 8px; /* Rounded corners */
-    padding: 20px; /* Padding inside the container */
-    margin: 20px; /* Margin around the container */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for a card-like effect */
-    background-color: #f9f9f9; /* Background color */
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    padding: 20px; 
+    margin: 20px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    background-color: #f9f9f9; 
  
     
   }
 
 /* myShip.css */
 .see-customers {
-  background-image: url('D:\SCMXPertLite\project_scm\scm_frontend\src\images\DevData.jpg'); /* Replace 'path_to_your_image.jpg' with the actual path to your image */
+  background-image: url('D:\SCMXPertLite\project_scm\scm_frontend\src\images\DevData.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  min-height: 93vh; /* Ensure the background covers the entire viewport height */
-  padding: 20px; /* Adjust padding as needed */
-  /* Add other styles as required */
+  min-height: 93vh;
+  padding: 20px; 
+ 
 
  
-}/* BackButton.css */
+}
 .back-button {
   width: 50px;
   height: 50px;
   position: absolute;
-  top: 70px; /* Adjust the top position as needed */
-  left: 20px; /* Adjust the left position as needed */
-  transform: translate(0, 0); /* Reset the translate transformation */
+  top: 70px; 
+  left: 20px; 
+  transform: translate(0, 0); 
   border-radius: 50%;
   border: #03A9F4 1px solid;
   overflow: hidden;
@@ -38,7 +38,7 @@
   background: #fff;
 }
 .back-button:hover {
-  background: #03A9F4; /* Cyan blue on hover */
+  background: #04aad3; 
 }
 
 .arrow-wrap {
@@ -55,7 +55,7 @@
   height: 1px;
   left: 0;
   top: 50%;
-  background: #03A9F4;
+  background: #04aad3;
   position: absolute;
   display: block;
 }

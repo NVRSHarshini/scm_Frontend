@@ -1,4 +1,5 @@
 import React, { useState,useRef,useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode'; 
 import { format,addDays  } from 'date-fns';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
@@ -7,24 +8,23 @@ import img from '../images/bg_chat.webp';
 import { useNavigate } from 'react-router-dom';
 import 'react-datepicker/dist/react-datepicker.css';
 import "../styles/Create_ship.css";
+
+
 export default function Create_Ship() {
   const navigate = useNavigate(); 
 
   useEffect(() => {
     
-    const token = localStorage.getItem('token'); 
+    const token = sessionStorage.getItem('token'); 
     if (!token) {
      
       navigate('/'); 
     }
   }, [navigate]); 
-  const [formProgress, setFormProgress] = useState(0); // State to track form progress
+  const [formProgress, setFormProgress] = useState(0); 
   const totalFields = 12; 
 
   const mainContainerRef = useRef(null);
-
-  
-  const [focused, setFocused] = useState(false);
   
   const data = [
     { id: 1, label: "City Express" },
@@ -89,28 +89,17 @@ const data_goods = [
   const handleCreateShipment = (e) => {
     e.preventDefault();
   
-    // Extract the token from local storage
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');  
+
+    if (!token) {
+      throw new Error('Token is missing'); 
+    }
+
+    const decodedToken = jwtDecode(token);  
+    const userEmail = decodedToken.email;
     
-    // Extract user email from token
-    const extractEmailFromToken = (token) => {
-      if (!token) {
-        return null;
-      }
-  
-      try {
-        const tokenPayload = token.split('.')[1];
-        const decodedPayload = atob(tokenPayload);
-        const { email } = JSON.parse(decodedPayload);
-        return email;
-      } catch (error) {
-        console.error('Error extracting email from token:', error);
-        return null;
-      }
-    };
-  
-    const userEmail = extractEmailFromToken(token);
-  
+
+   
     axios.post(`http://127.0.0.1:8000/create_shipment/`, {
       email: userEmail,
       ShipmentNumber: formData.ShipNo || "",
@@ -121,7 +110,7 @@ const data_goods = [
       SerialNumberOfGoods: formData.SerialNo || "",
       ContainerNumber: formData.ContainerNo || "",
       Goods: selectedGoods || "",
-      Date: formattedDate || "", // Corrected field name
+      Date: formattedDate || "", 
       DeliveryNumber: formData.DeliveryNo || "",
       BatchId: formData.BatchId|| "",
       ShipmentDescription: formData.ShipmentDesc || ""
@@ -265,7 +254,7 @@ const data_goods = [
 
 </p>
 <div className="your-process-card">
-<p> Your Progress
+<p style={{marginLeft:'30px'}}> Your Progress
 
 </p>
 <div className="progress-bar-container">
@@ -288,11 +277,11 @@ const data_goods = [
             <div className="form-grid-6x2">
               {/* Row 1 */}
               <div className="input-block">
-                <label style={{ color: focused ? 'red' : 'black', fontSize: 'large' }} className="required" htmlFor="number">Shipment Number</label>
+                <label style={{  fontSize: 'large' }} className="required" htmlFor="number">Shipment Number</label>
                 <input id="ShipNo" type="text" name="ShipNo"value={formData.ShipNo} placeholder="Shipment number" onChange={handleChange} />
               </div>
               <div className="input-block">
-                <label style={{ color: focused ? 'red' : 'black', fontSize: 'large' }} className="labels" htmlFor="routeDetails">Select Route</label>
+                <label style={{  fontSize: 'large' }} className="labels" htmlFor="routeDetails">Select Route</label>
                 <select className="dropdown-header" id="routeDetails" name="routeDetails" value={selectedRoute} onChange={handleSelectRoute}>
                   <option className="dropdown-body" value="">Select Route</option>
                   {data.map(option => (
@@ -302,7 +291,7 @@ const data_goods = [
               </div>
               {/* Row 2 */}
               <div className="input-block">
-        <label style={{ color: focused ? 'red' : 'black', fontSize: 'large' }} className="labels" htmlFor="device">
+        <label style={{  fontSize: 'large' }} className="labels" htmlFor="device">
           Select Device
         </label>
         <select className="dropdown-header" id="device" name="device" value={selectedDevice} onChange={handleSelectDevice}>
@@ -313,16 +302,16 @@ const data_goods = [
         </select>
       </div>
               <div className="input-block">
-                <label style={{ color: focused ? 'red' : 'black', fontSize: 'large' }} className="labels" htmlFor="PPoNo">PPO Number</label>
+                <label style={{  fontSize: 'large' }} className="labels" htmlFor="PPoNo">PPO Number</label>
                 <input id="PPoNo" type="text" name="PPoNo" value={formData.PPoNo}placeholder="PPO number" onChange={handleChange} />
               </div>
               {/* Row 3 */}
               <div className="input-block">
-                <label style={{ color: focused ? 'red' : 'black', fontSize: 'large' }} className="labels" htmlFor="NDCNo">NDC Number</label>
+                <label style={{  fontSize: 'large' }} className="labels" htmlFor="NDCNo">NDC Number</label>
                 <input id="NDCNo" type="text" name="NDCNo"value={formData.NDCNo} placeholder="NDC Number" onChange={handleChange} />
               </div>
               <div className="input-block">
-                <label style={{ color: focused ? 'red' : 'black', fontSize: 'large' }} className="labels" htmlFor="SerialNo">Serial Number of Goods</label>
+                <label style={{  fontSize: 'large' }} className="labels" htmlFor="SerialNo">Serial Number of Goods</label>
                 <input id="SerialNo" type="text" name="SerialNo" value={formData.SerialNo}placeholder="Serial number of goods" onChange={handleChange} />
               </div>
             </div>
@@ -330,11 +319,11 @@ const data_goods = [
             <div className="form-grid-6x2">
               {/* Row 1 */}
               <div className="input-block">
-                <label style={{ color: focused ? 'red' : 'black', fontSize: 'large' }} className="labels" htmlFor="ContainerNo">Container Number</label>
+                <label style={{  fontSize: 'large' }} className="labels" htmlFor="ContainerNo">Container Number</label>
                 <input id="ContainerNo" type="text" name="ContainerNo"value={formData.ContainerNo} placeholder="Enter container number" onChange={handleChange} />
               </div>
               <div className="input-block">
-        <label style={{ color: focused ? 'red' : 'black', fontSize: 'large' }} className="labels" htmlFor="Goods">
+        <label style={{  fontSize: 'large' }} className="labels" htmlFor="Goods">
           Select Goods
         </label>
         <select className="dropdown-header" id="Goods" name="Goods" value={selectedGoods} onChange={handleSelectGoods}>
@@ -346,7 +335,7 @@ const data_goods = [
       </div>
               {/* Row 2 */}
               <div className="input-block">
-                <label style={{ color: focused ? 'red' : 'black', fontSize: 'large' }} className="labels" htmlFor="number">Select Date</label>
+                <label style={{  fontSize: 'large' }} className="labels" htmlFor="number">Select Date</label>
                 <div className="custom-date-picker">
                   <DatePicker
                     selected={selectedDate2}
@@ -360,16 +349,16 @@ const data_goods = [
                 </div>
               </div>
               <div className="input-block">
-                <label style={{ color: focused ? 'red' : 'black', fontSize: 'large' }} className="labels" htmlFor="DlvryNo">Delivery Number</label>
+                <label style={{  fontSize: 'large' }} className="labels" htmlFor="DlvryNo">Delivery Number</label>
                 <input id="DlvryNo" type="text" name="DeliveryNo"value={formData.DeliveryNo} placeholder="Delivery number" onChange={handleChange} />
               </div>
               {/* Row 3 */}
               <div className="input-block">
-                <label style={{ color: focused ? 'red' : 'black', fontSize: 'large' }} className="labels" htmlFor="BatchNo">Batch Id</label>
+                <label style={{  fontSize: 'large' }} className="labels" htmlFor="BatchNo">Batch Id</label>
                 <input id="BatchNo" type="text" name="BatchId" value={formData.BatchId}placeholder="BatchID" onChange={handleChange} />
               </div>
               <div className="input-block">
-                <label style={{ color: focused ? 'red' : 'black', fontSize: 'large' }} className="labels" htmlFor="ShpDescNo">Shipment Description</label>
+                <label style={{  fontSize: 'large' }} className="labels" htmlFor="ShpDescNo">Shipment Description</label>
                 <input className="bigger-input" id="ShpDescNo" type="text" name="ShipmentDesc"value={formData.ShipmentDesc} placeholder="Shipment description" onChange={handleChange} />
               </div>
             </div>

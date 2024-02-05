@@ -6,17 +6,10 @@
 .title {
   text-align: center;
   margin-bottom: 10px;
-  background-image: linear-gradient(to right,#020909,#022D31,#81c0c4, #0F919E,#037986,#477879,#020909);
+  background-image: linear-gradient(to right, #020909, #022D31, #81c0c4, #0F919E, #037986, #477879, #020909);
   border: 0;
 }
-/* #main{
-   background-image: url('../images/cre_side.jpg')  ; 
- background-repeat: no-repeat; 
-  
-   background-size: contain; 
 
-
-} */
 .containing {
   display: flex;
   height: 100vh; /* Full viewport height */
@@ -42,32 +35,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  
-}
-/* Ensures the image takes the full viewport */
-.image-container {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* Style for the moving image */
-.moving-image {
-  position: absolute;
-  opacity: 15;
-  left: 0; /* Initial position at the left side of the container */
-  animation: slideRight 5s linear forwards; /* Adjust the animation duration as needed */
-}
-
-/* Keyframes animation to move the image from left to right */
-@keyframes slideRight {
-  0% {
-    left: 0; /* Starting position (left side of the container) */
-  }
-  100% {
-    left: calc(100% - 100px); /* Ending position (100px from the right side) */
-  }
 }
 
 /* Form container styles */
@@ -124,10 +91,6 @@
   margin-bottom: 20px;
 }
 
-
-
-/* Additional styles as needed */
-
 /* Button styles */
 .button-77 {
   padding: 10px 20px;
@@ -141,24 +104,22 @@
   transition: background-color 0.3s ease;
 }
 
-
-/* Additional styles as needed */
-
 .button-77:hover {
-  background-image: linear-gradient(to right,#020909,#022D31,#81c0c4, #0F919E,#037986,#477879,#020909);
+  background-image: linear-gradient(to right, #020909, #022D31, #81c0c4, #0F919E, #037986, #477879, #020909);
 }
+
 .head-text {
   position: relative;
 }
+
 .text-on-image {
- position: absolute;
- font-size: 30px;
- color: rgb(255, 255, 255);
-  /* right: 25%; */
- left: 10%;
- bottom: 40%; 
-  /* font-weight: bold; */
+  position: absolute;
+  font-size: 30px;
+  color: rgb(255, 255, 255);
+  left: 10%;
+  bottom: 40%;
 }
+
 /* Additional styles as needed */
 .form-wrappers {
   padding-left: 50px;
@@ -169,6 +130,7 @@
   justify-content: center;
   height: 90vh; /* Optionally, sets the form to fill the entire viewport height */
 }
+
 /* Styles for form fields */
 .form-wrappers {
   display: flex;
@@ -193,20 +155,21 @@ label {
   font-size: 16px;
   font-weight: bold;
 }
+
 /* Styles for the progress bar */
 .progress-bar-container {
+  margin-left: 30px;
   width: 70%;
   background-color: #ddd;
   border-radius: 5px;
-  /* margin-bottom: 20px; */
   overflow: hidden;
 }
 
 .progress-bar {
+ 
   background-color: #1d9780;
   color: #fff;
   text-align: center;
-  /* padding: 8px 0; */
   border-radius: 5px;
   transition: width 0.3s ease-in-out;
   height: 27px;
@@ -218,11 +181,26 @@ label {
   font-size: 19px;
 }
 
-
 .your-process-card {
-  border: 2px solid #ddd; /* White border */
+  border: 2px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(187, 240, 231, 0.925); /* White shadow */
+  box-shadow: 0 0 10px rgba(187, 240, 231, 0.925);
   padding-bottom: 20px;
+}
+/* Style for the moving image */
+.moving-image {
+  position: absolute;
   
+  left: 0; /* Initial position at the left side of the container */
+  animation: slideRight 5s linear forwards; /* Adjust the animation duration as needed */
+}
+
+/* Keyframes animation to move the image from left to right */
+@keyframes slideRight {
+  0% {
+    left: 0; /* Starting position (left side of the container) */
+  }
+  100% {
+    left: calc(100% - 100px); /* Ending position (100px from the right side) */
+  }
 }

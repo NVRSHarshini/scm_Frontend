@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';  
 import axios from 'axios';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -8,60 +9,43 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 const ShipmentCountCard = () => {
-  const [shipmentCount, setShipmentCount] = useState(0);
- 
+  const [shipmentCount, setShipmentCount] = useState(0); 
   const navigate = useNavigate();
 
-  const extractEmailFromToken = (token) => {
-    if (!token) {
-      return null;
-    }
-
+  useEffect(() => {  
+  const fetchShipmentCount = async () => {
     try {
-      const tokenPayload = token.split('.')[1];
-      const decodedPayload = atob(tokenPayload);
-      const { sub: email } = JSON.parse(decodedPayload);
-      return email;
+      const token = sessionStorage.getItem('token');  // Retrieve the JWT token from local storage
+
+      if (!token) {
+        throw new Error('Token is missing'); 
+      }
+
+      const decodedToken = jwtDecode(token);  
+      const userEmail = decodedToken.email; 
+
+
+      const response = await axios.get(`http://127.0.0.1:8000/ship/${(userEmail)}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+    
+      setShipmentCount(response.data.length);
     } catch (error) {
-      console.error('Error extracting email from token:', error);
-      return null;
+      console.error('Error fetching shipment count:', error);
+
+      // Check if the error is a 404 Not Found
+      if (error.response && error.response.status === 404) {
+        console.log('No shipments found for the user.');
+
+      } else {
+        navigate('/');
+      }
     }
   };
-
-  useEffect(() => {
-    const fetchShipmentCount = async () => {
-      try {
-        const token = localStorage.getItem('token');
-  
-        if (!token) {
-          throw new Error('Token is missing');
-        }
-  
-        const userEmail = extractEmailFromToken(token) + '@gmail.com';
-  
-        const response = await axios.get(`http://127.0.0.1:8000/ship/${encodeURIComponent(userEmail)}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-  
-        console.log(response.data);
-        setShipmentCount(response.data.length);
-      } catch (error) {
-        console.error('Error fetching shipment count:', error);
-  
-        // Check if the error is a 404 Not Found
-        if (error.response && error.response.status === 404) {
-          console.log('No shipments found for the user.');
-          
-          // Handle the case where no shipments are found (e.g., set the count to 0)
-        } else {
-          // Handle other errors, e.g., redirect to login page
-          navigate('/');
-        }
-      }
-    };
   
     fetchShipmentCount();
   }, []);
