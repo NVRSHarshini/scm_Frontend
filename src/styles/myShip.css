@@ -12,7 +12,7 @@
 
 /* myShip.css */
 .see-customers {
-  background-image: url('D:\SCMXPertLite\project_scm\scm_frontend\src\images\DevData.jpg');
+  background-image: url('/src/images/DevData.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 93vh;

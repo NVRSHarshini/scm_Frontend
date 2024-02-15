@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 const ShipmentCountCard = () => {
   const [shipmentCount, setShipmentCount] = useState(0); 
   const navigate = useNavigate();
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   useEffect(() => {  
   const fetchShipmentCount = async () => {
     try {
@@ -25,7 +25,7 @@ const ShipmentCountCard = () => {
       const userEmail = decodedToken.email; 
 
 
-      const response = await axios.get(`http://127.0.0.1:8000/ship/${(userEmail)}`, {
+      const response = await axios.get(`${apiUrl}/ship/${(userEmail)}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

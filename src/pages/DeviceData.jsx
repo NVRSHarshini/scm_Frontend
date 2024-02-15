@@ -10,53 +10,50 @@ const DeviceData = () => {
   const token = sessionStorage.getItem('token');
   const [deviceData, setDeviceData] = useState([]);
   const [deviceId, setDeviceId] = useState('');
-  const [tableData, setTableData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // Current page number
+  const itemsPerPage = 25; // Number of items per page
+  const apiUrl = process.env.REACT_APP_API_URL;
 
+  // Function to handle back button click
   const handleBack = () => {
     navigate("/dashboard");
   };
+
+  // Fetch device data from the API
   useEffect(() => {
-  const fetchData = async () => {
-    try {
-      let endpoint = 'http://127.0.0.1:8000/deviceData';
-      if (deviceId && deviceId.trim() !== '') {
-        endpoint += `/${deviceId}`;
-      }
-
-      const response = await axios.get(endpoint, {
-        headers: {
-          Authorization: `Bearer ${token}`
+    const fetchData = async () => {
+      try {
+        let endpoint = `${apiUrl}/deviceData`;
+        if (deviceId && deviceId.trim() !== '') {
+          endpoint += `/${deviceId}`;
         }
-      });
 
-      setDeviceData(response.data);
-      setTableData(response.data);
-    } catch (error) {
-      console.error('Error fetching device data:', error);
-    }
-  };
+        const response = await axios.get(endpoint, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
-  fetchData();
-}, [token, deviceId]);
-
-const handleGetDeviceData = async () => {
-  try {
-    let endpoint = 'http://127.0.0.1:8000/deviceData';
-    if (deviceId && deviceId.trim() !== '') {
-      endpoint += `/${deviceId}`;
-    }
-
-    const response = await axios.get(endpoint, {
-      headers: {
-        Authorization: `Bearer ${token}`
+        setDeviceData(response.data);
+      } catch (error) {
+        console.error('Error fetching device data:', error);
       }
-    });
+    };
 
-    setTableData(response.data);
-  } catch (error) {
-    console.error('Error fetching device data:', error);
-  }
-};
+    fetchData();
+  }, [token, deviceId]);
+
+  // Calculate index range for current page
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, deviceData.length);
+
+  // Data for the current page
+  const currentPageData = deviceData.slice(startIndex, endIndex);
+
+  // Function to handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <Lay>
@@ -65,13 +62,7 @@ const handleGetDeviceData = async () => {
           <center>
             <h1 className="mb-4" style={{ color: "white" }}>Device Data</h1>
           </center>
-          <div
-            className="back-button"
-            onClick={handleBack}
-            role="button"
-            tabIndex={0}
-            style={{ marginTop: '20px' }}
-          >
+          <div className="back-button" onClick={handleBack} role="button" tabIndex={0} style={{ marginTop: '20px' }}>
             <div className="arrow-wrap">
               <span className="arrow-part-1"></span>
               <span className="arrow-part-2"></span>
@@ -96,18 +87,18 @@ const handleGetDeviceData = async () => {
                   fullWidth
                   style={{ backgroundColor: 'white' }}
                 />
-                {/* <Button
-                  type="button"
-                  variant="contained"
-                  color="info"
-                  onClick={handleGetDeviceData}
-                  style={{ marginLeft: '10px', backgroundColor: 'black', color: 'cyan' }}
-                >
-                  Get Device Data
-                </Button> */}
               </div>
             </CardContent>
           </Card>
+
+          {/* Pagination controls */}
+          <div style={{ maxWidth: "1000px", margin: "auto", display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+            <Button onClick={() => handlePageChange(1)}>First</Button>
+            {Array.from({ length: Math.ceil(deviceData.length / itemsPerPage) }, (_, index) => index + 1).map(pageNumber => (
+              <Button key={pageNumber} onClick={() => handlePageChange(pageNumber)}>{pageNumber}</Button>
+            ))}
+            <Button onClick={() => handlePageChange(Math.ceil(deviceData.length / itemsPerPage))}>Last</Button>
+          </div>
 
           {/* Table to display device data */}
           <TableContainer component={Paper} style={{ maxWidth: "1000px", margin: "auto", backgroundColor: '#232B2B', color: 'black' }}>
@@ -122,7 +113,7 @@ const handleGetDeviceData = async () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {tableData.map((data, index) => (
+                {currentPageData.map((data, index) => (
                   <TableRow key={index}>
                     <TableCell style={{ color: "white" }}>{data.Device_ID}</TableCell>
                     <TableCell style={{ color: "white" }}>{data.Battery_Level}</TableCell>

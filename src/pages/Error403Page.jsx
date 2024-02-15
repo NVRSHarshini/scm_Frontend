@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import err from "../images/Error.jpg";
 export default function Error403Page() {
   const navigate = useNavigate();
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   const navigateHome = () => {
     navigate('/dashboard');
   };

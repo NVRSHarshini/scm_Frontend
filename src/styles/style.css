@@ -283,7 +283,11 @@
 	transform: translateX(0);
 	transition: all .4s ease-in;
 }
-
+.error-message {
+	color: red; /* Set the color to red */
+	font-size: 14px; /* Optionally adjust font size */
+  }
+  
 .btn-login {
 	color: #fbfdff;
 	background: #a7e245;

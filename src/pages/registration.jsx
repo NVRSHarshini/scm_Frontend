@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import qs from 'querystring';
+import ShowIcon from '../images/Show.png'; // Import your show icon
+import HideIcon from '../images/Hide.png'; // Import your hide icon
 import '../styles/style.css';
 import Refresh from '../images/Refresh.jpg'
 const Registration = () => {
@@ -9,6 +11,9 @@ const Registration = () => {
 
   // State variables
   const apiUrl = process.env.REACT_APP_API_URL;
+  console.log("apiUrl",apiUrl);
+  const [errors, setErrors] = useState({});
+
   const [loginError, setLoginError] = useState('');
   const [registrationError, setRegistrationError] = useState('');
   const [formData, setFormData] = useState({
@@ -19,7 +24,7 @@ const Registration = () => {
     captcha: '',
     enteredCaptcha: '',
   });
-
+  const [showPassword, setShowPassword] = useState(false);
   // Function to generate a random captcha
   const generateRandomCaptcha = (length) => {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -37,7 +42,7 @@ const Registration = () => {
       email: '',
       password: '',
       phone: '',
-      captcha: generateRandomCaptcha(6),
+      captcha: generateRandomCaptcha(5),
       enteredCaptcha: '',
     });
   };
@@ -116,13 +121,18 @@ const Registration = () => {
         };
 
         // POST request to the backend API for login
-        //const response = await axios.post(`${apiUrl}/login`, qs.stringify(loginData));
-        const response = await axios.post('http://127.0.0.1:8000/login', qs.stringify(loginData));
+        const response = await axios.post(`${apiUrl}/login`, qs.stringify(loginData));
+        console.log(apiUrl)
+      //  const response = await axios.post(`http://127.0.0.1:8000/login`, qs.stringify(loginData));
 
         console.log(response.data);
 
         if (response.status === 200) {
           sessionStorage.setItem('token', response.data.access_token);
+          console.log("apiUrl",apiUrl);
+          console.log("env",process.env);
+          console.log("url frm env",process.env.REACT_APP_API_URL);
+
           navigate('/success');
         } else {
           // Handle login failure and set specific error messages
@@ -150,45 +160,49 @@ const Registration = () => {
     }
   };
 
+  
+  
+  
   // Function to handle registration form submission
-  const handleRegister = (e) => {
-    e.preventDefault();
+const handleRegister = (e) => {
+  e.preventDefault();
 
-    // Validate the form inputs
-    const errors = validate(formData);
+  // Validate the form inputs
+  const validationErrors = validate(formData);
 
-    if (Object.keys(errors).length === 0) {
-      axios
-        .post(`http://127.0.0.1:8000/registration`, {
-          username: formData.Name,
-          email: formData.email,
-          password: formData.password,
-          phone: formData.phone,
-        })
-        .then(response => {
-          if (response.status === 200) {
-            console.log(response.data, response.status);
-            navigate('/');
-            switchForm('login');
-          } else {
-            console.log(response.data);
-            navigate('/'); // Handle other status codes accordingly
-          }
-        })
-        .catch(error => {
-          console.error(error);
-          if (error.response && error.response.status === 409) {
-            setRegistrationError('Email already exists. Please use a different email.');
-          } else {
-            const passwordLengthError = errors.password;
-            const phoneLengthError = errors.phone;
-            setRegistrationError(
-              `Failed to register. Please try again. Password Length Error: ${passwordLengthError || 'None'}. Phone Length Error: ${phoneLengthError || 'None'}`
-            );
-          }
-        });
-    }
-  };
+  // Set errors state with validation errors
+  setErrors(validationErrors);
+
+  // If there are no validation errors, proceed with registration
+  if (Object.keys(validationErrors).length === 0) {
+    axios
+      .post(`${apiUrl}/registration`, {
+        username: formData.Name,
+        email: formData.email,
+        password: formData.password,
+        phone: formData.phone,
+      })
+      .then(response => {
+        if (response.status === 200) {
+          console.log(response.data, response.status);
+          navigate('/');
+          switchForm('login');
+        } else {
+          console.log(response.data);
+          navigate('/'); // Handle other status codes accordingly
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        if (error.response && error.response.status === 409) {
+          setRegistrationError('Email already exists. Please use a different email.');
+        } else {
+          setRegistrationError('Failed to register. Please try again.');
+        }
+      });
+  }
+};
+
 
   // Function to handle captcha refresh
   const handleRefreshCaptcha = () => {
@@ -228,7 +242,32 @@ const Registration = () => {
                 </div>
                 <div className="input-block">
                   <label htmlFor="login-password">Password</label>
-                  <input id="login-password" type="password" name="password" onChange={handleChange} required />
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <input
+      id="login-password"
+      type={showPassword ? "text" : "password"}
+      name="password"
+      onChange={handleChange}
+      required
+    />
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      style={{
+        border: 'none',
+        padding: 0,
+        background: 'none',
+        marginLeft: '10px', // Adjust the margin as needed
+      }}
+    >
+      {showPassword ? (
+        <img style={{ height: '30px', width: '30px' }} src={HideIcon} alt="Hide Icon" />
+      ) : (
+        <img style={{ height: '30px', width: '30px' }} src={ShowIcon} alt="Show Icon" />
+      )}
+    </button>
+  </div>
+
                 </div>
                 <div className="input-block">
                   <label htmlFor="captcha">Captcha</label>
@@ -262,43 +301,66 @@ const Registration = () => {
         </div>
 
         {/* Registration Form */}
-        <div className={`form-wrapper ${activeForm === 'signup' ? 'is-active' : ''}`}>
-          <button type="button" className="switcher switcher-signup" onClick={() => switchForm('signup')}>
-            <b>Registration</b>
-            <span className="underline"></span>
-          </button>
-          <center>
-            <form className="form form-signup" onSubmit={handleRegister}>
-              <fieldset>
-                {registrationError && (
-                  <p className="error-message" style={{ color: 'red' }}>
-                    {registrationError}
-                  </p>
-                )}
-                <h2 className="colorful-text">Register with us to get started!</h2>
-                <div className="input-block">
-                  <label htmlFor="login-name">Name</label>
-                  <input id="login-name" type="text" name="Name" onChange={handleChange} />
-                </div>
-                <div className="input-block">
-                  <label htmlFor="signup-email">E-mail</label>
-                  <input id="signup-email" type="email" name="email" onChange={handleChange} required />
-                </div>
-                <div className="input-block">
-                  <label htmlFor="signup-password">Password</label>
-                  <input id="signup-password" type="password" name="password" onChange={handleChange} required />
-                </div>
-                <div className="input-block">
-                  <label htmlFor="signup-phone">Phone</label>
-                  <input id="signup-phone" type="tel" name="phone" onChange={handleChange} />
-                </div>
-              </fieldset>
-              <button type="submit" className="btn-login">
-                Register
-              </button>
-            </form>
-          </center>
+<div className={`form-wrapper ${activeForm === 'signup' ? 'is-active' : ''}`}>
+  <button type="button" className="switcher switcher-signup" onClick={() => switchForm('signup')}>
+    <b>Registration</b>
+    <span className="underline"></span>
+  </button>
+  <center>
+    <form className="form form-signup" onSubmit={handleRegister}>
+      <fieldset>
+      <h2 className="colorful-text">Register with us to get started!</h2>
+        {/* Display overall registration error message */}
+        {registrationError && (
+          <p className="error-message" style={{ color: 'red' }}>
+            {registrationError}
+          </p>
+        )}
+
+        {/* Name input field */}
+        <div className="input-block">
+
+        
+          <label htmlFor="login-name">Name</label>
+          <input id="login-name" type="text" name="Name" onChange={handleChange} />
         </div>
+        {/* Display error for name field */}
+        {errors.Name && <p className="error-message">{errors.Name}</p>}
+
+        {/* Email input field */}
+        <div className="input-block">
+          <label htmlFor="signup-email">E-mail</label>
+          <input id="signup-email" type="email" name="email" onChange={handleChange} required />
+        </div>
+        {/* Display error for email field */}
+        {errors.email && <p className="error-message" style={{ color: 'red' }}>{errors.email}</p>}
+
+        {/* Password input field */}
+        <div className="input-block">
+          <label htmlFor="signup-password">Password</label>
+          <input id="signup-password" type="password" name="password" onChange={handleChange} required />
+        </div>
+        {/* Display error for password field */}
+        {errors.password && <p className="error-message">{errors.password}</p>}
+
+        {/* Phone input field */}
+        <div className="input-block">
+          <label htmlFor="signup-phone">Phone</label>
+          <input id="signup-phone" type="tel" name="phone" onChange={handleChange} />
+        </div>
+        {/* Display error for phone field */}
+        {errors.phone && <p className="error-message">{errors.phone}</p>}
+      </fieldset>
+      <button type="submit" className="btn-login">
+        Register
+      </button>
+    </form>
+  </center>
+</div>
+
+
+
+
       </div>
     </div>
   );

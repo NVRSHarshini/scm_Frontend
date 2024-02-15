@@ -12,7 +12,7 @@ import "../styles/myShip.css";
 const ShipmentDetails = () => {
   // Initialize the useNavigate hook from 'react-router-dom'
   const navigate = useNavigate();
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   // State variables for managing shipments and search functionality
   const [shipments, setShipments] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -33,7 +33,7 @@ const ShipmentDetails = () => {
       const decodedToken = jwtDecode(token);  
       const email = decodedToken.email; 
 
-      const response = await axios.get(`http://127.0.0.1:8000/ship/${(email)}`, {
+      const response = await axios.get(`${apiUrl}/ship/${(email)}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -13,7 +13,7 @@ import '../styles/MyAcct.css';
 const UserProfile = () => {
   const [userProfile, setUserProfile] = useState(null);  
   const navigate = useNavigate(); 
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   const fetchUserProfile = async () => {
     try {
       const token = sessionStorage.getItem('token');  // Retrieve the JWT token from local storage
@@ -26,7 +26,7 @@ const UserProfile = () => {
       const userEmail = decodedToken.email;  // Extract the email from the decoded token
 
       // Fetch user profile from the server using the email and token for authentication
-      const response = await axios.get(`http://127.0.0.1:8000/profile/${(userEmail)}`, {
+      const response = await axios.get(`${apiUrl}/profile/${(userEmail)}`, {
         headers: {
           Authorization: `Bearer ${token}`,  // Include the token in the request headers for authentication
         },

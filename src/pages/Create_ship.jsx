@@ -12,7 +12,9 @@ import "../styles/Create_ship.css";
 
 export default function Create_Ship() {
   const navigate = useNavigate(); 
-
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   useEffect(() => {
     
     const token = sessionStorage.getItem('token'); 
@@ -59,6 +61,8 @@ const data_goods = [
   const handleDate2Change = (date) => {
     setSelectedDate2(date);
     calculateProgress();
+    setSuccessMessage('');
+    setErrorMessage(''); 
   };
 
    const [selectedRoute, setSelectedRoute] = useState(null);
@@ -89,85 +93,107 @@ const data_goods = [
   const handleCreateShipment = (e) => {
     e.preventDefault();
   
-    const token = sessionStorage.getItem('token');  
-
+    const token = sessionStorage.getItem('token');
+  
     if (!token) {
-      throw new Error('Token is missing'); 
+      throw new Error('Token is missing');
     }
-
-    const decodedToken = jwtDecode(token);  
+  
+    const decodedToken = jwtDecode(token);
     const userEmail = decodedToken.email;
-    
-
-   
-    axios.post(`http://127.0.0.1:8000/create_shipment/`, {
-      email: userEmail,
-      ShipmentNumber: formData.ShipNo || "",
-      RouteDetails: selectedRoute || "",
-      Device: selectedDevice || "",
-      PPONumber: formData.PPoNo || "",
-      NDCNumber: formData.NDCNo || "",
-      SerialNumberOfGoods: formData.SerialNo || "",
-      ContainerNumber: formData.ContainerNo || "",
-      Goods: selectedGoods || "",
-      Date: formattedDate || "", 
-      DeliveryNumber: formData.DeliveryNo || "",
-      BatchId: formData.BatchId|| "",
-      ShipmentDescription: formData.ShipmentDesc || ""
-    }, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(response => {
-      if (response.status === 200) {   
-        // Handle success scenario for shipment creation         
-        setFormData({
-          email: '',
-          ShipNo: '',
-          routeDetails: '', 
-          device: '', 
-          PPoNo: '',
-          NDCNo: '',
-          SerialNo: '',
-          ContainerNo: '',
-          Goods: '',
-          selectedDate: null,
-          DeliveryNo: '',
-          BatchId: '',
-          ShipmentDesc: ''
-        });
-      
-        setSelectedDate2(null);
-        setSelectedRoute(''); 
-        setSelectedDevice(''); 
-        setSelectedGoods(''); 
-        setFormProgress(0);
+  
+    // Check if any required fields are empty
+    if (
+      formData.ShipNo === '' ||
+      selectedRoute === '' ||
+      selectedDevice === '' ||
+      formData.PPoNo === '' ||
+      formData.NDCNo === '' ||
+      formData.SerialNo === '' ||
+      formData.ContainerNo === '' ||
+      selectedGoods === '' ||
+      formattedDate === '' ||
+      formData.DeliveryNo === '' ||
+      formData.BatchId === '' ||
+      formData.ShipmentDesc === ''
+    ) {
+      setErrorMessage('Please fill in all the fields');
+      return; // Exit the function early if any field is empty
+    }
+    if (formData.ShipNo.length <= 6) {
+      setErrorMessage('Shipment number must be greater than 7 characters');
+      return; }
+    axios
+      .post(
+        `${apiUrl}/create_shipment/`,
+        {
+          email: userEmail,
+          ShipmentNumber: formData.ShipNo || '',
+          RouteDetails: selectedRoute || '',
+          Device: selectedDevice || '',
+          PPONumber: formData.PPoNo || '',
+          NDCNumber: formData.NDCNo || '',
+          SerialNumberOfGoods: formData.SerialNo || '',
+          ContainerNumber: formData.ContainerNo || '',
+          Goods: selectedGoods || '',
+          Date: formattedDate || '',
+          DeliveryNumber: formData.DeliveryNo || '',
+          BatchId: formData.BatchId || '',
+          ShipmentDescription: formData.ShipmentDesc || '',
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then((response) => {
+        if (response.status === 200 || response.status === 201) {
+          // Handle success scenario for shipment creation
+          setFormData({
+            email: '',
+            ShipNo: '',
+            routeDetails: '',
+            device: '',
+            PPoNo: '',
+            NDCNo: '',
+            SerialNo: '',
+            ContainerNo: '',
+            Goods: '',
+            selectedDate: null,
+            DeliveryNo: '',
+            BatchId: '',
+            ShipmentDesc: '',
+          });
+  
+          setSelectedDate2(null);
+          setSelectedRoute('');
+          setSelectedDevice('');
+          setSelectedGoods('');
+          setFormProgress(0);
+          setSuccessMessage('Shipment created successfully!');
+        } 
         
-      } else if (response.status === 409) {
-         // Handle conflict scenario
-        console.log('Conflict:', response.data);
-       
-      }
-      // conditionals for different status codes
-    })
-    .catch(error => {
-      // Handle error
-      console.error('Error creating shipment:', error);
-      if (error.response) {
-        // The request was made, but the server responded with an error status
-        console.error('Server responded with:', error.response.data);
-        console.error('Status code:', error.response.status);
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error('No response received:', error.request);
-      } else {
-        // Something happened in setting up the request that triggered an error
-        console.error('Request error:', error.message);
-      }
-    });
+        // conditionals for different status codes
+      })
+      .catch((error) => {
+        setErrorMessage('Sorry Unable to process, try again!');
+        // Handle error
+        console.error('Error creating shipment:', error);
+        if (error.response.status === 409) {
+          // The request was made, but the server responded with an error status
+          setErrorMessage(`Shipment Conflict , Please select another shipment number!`);
+        } else if (error.response.status === 422) {
+          // The request was made but no response was received
+          setErrorMessage('Invalid Shipment number');
+        } else {
+          // Something happened in setting up the request that triggered an error
+          console.error('Request error:', error.message);
+        }
+      });
   };
+  
   
   const handleClear = () => {
    setFormData({
@@ -190,25 +216,33 @@ const data_goods = [
     setSelectedRoute(''); 
     setSelectedDevice(''); 
     setSelectedGoods(''); 
-    setFormProgress(0);  
+    setFormProgress(0);
+    setSuccessMessage('');
+    setErrorMessage('');  
   };
   
   const handleSelectRoute = (event) => {
     setSelectedRoute(event.target.value);
     setFormData({ ...formData, routeDetails: event.target.value });
-    calculateProgress(); // Update progress whenever a route is selected
+    calculateProgress(); 
+    setSuccessMessage('');
+    setErrorMessage('');  
   };
   
   const handleSelectDevice = (event) => {
     setSelectedDevice(event.target.value);
     setFormData({ ...formData, device: event.target.value });
-    calculateProgress(); // Update progress whenever a device is selected
+    calculateProgress(); 
+    setSuccessMessage('');
+    setErrorMessage('');  
   };
   
   const handleSelectGoods = (event) => {
     setSelectedGoods(event.target.value);
     setFormData({ ...formData, Goods: event.target.value });
-    calculateProgress(); // Update progress whenever goods are selected
+    calculateProgress(); 
+    setSuccessMessage('');
+    setErrorMessage('');  
   };
   
   
@@ -217,6 +251,8 @@ const data_goods = [
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     calculateProgress();
+    setErrorMessage("");
+    setSuccessMessage("");
   };
 
   const calculateProgress = () => {
@@ -263,7 +299,20 @@ const data_goods = [
   </div>
 </div>
 </div>
+{/* Success message */}
+{successMessage && (
+          <div style={{ color: 'green', textAlign: 'center', marginTop: '20px' }}>
+            {successMessage}
+          </div>
+        )}
+        {/* Error message */}
+    {errorMessage && (
+      <div style={{ color: 'red', textAlign: 'center', marginTop: '20px' }}>
+        {errorMessage}
+      </div>
+    )}
 </div>
+
           
   {/* <div id='main'> */}
       <div className="form-wrappers">
